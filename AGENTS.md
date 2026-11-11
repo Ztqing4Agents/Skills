@@ -5,6 +5,7 @@
 ## 项目概览
 
 - 这里是**技能集合**：`<name>/` 是自包含的 Agent Skills bundle，仓库根只放集合级文档。
+- 技能图标在 [brand/](brand/)（`icon.svg` + 1024/512 PNG）。改图标后要在 SkillHub 网页端重新上传——CLI 不支持传图标。
 - **产品内容与项目文档是两套东西**。`dev-docs-standards/` 是商品本身，不受本仓库的文档规范管辖——它在 [.docs-standards.json](.docs-standards.json) 的 `exclude` 里，所有门禁对它隐形。别给它加「类型/读者」头注。
 
 ## 命令
