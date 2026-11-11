@@ -45,6 +45,7 @@ docs-standards: 1 red, 1 warn, 1 skip
 ```json
 {
   "whitelist": ["README.md", "AGENTS.md", "CHANGELOG.md", "spec.md", "docs/**"],
+  "exclude": [],
   "idPrefixes": ["U", "M", "V", "D"],
   "limits": {},
   "descriptionSource": "package.json"
@@ -54,6 +55,7 @@ docs-standards: 1 red, 1 warn, 1 skip
 | 字段 | 缺省 | 说明 |
 |---|---|---|
 | `whitelist` | 无 | **只有写了才判 G1**；没写则 G1 记 `skip`，绝不误报红。支持 `*`（单段）、`**`（跨目录）、`?` |
+| `exclude` | 无 | 命中的文件**不进任何闸**（G1–G14 都不判）。放「仓库里夹带、但不属于本规范管辖」的东西，例如随仓库携带的技能包 `"exclude": ["skills/**"]`。别用 `whitelist` 代替——进白名单仍要过 G2–G14 |
 | `idPrefixes` | `U/M/V/D` | 看板 ID 前缀词表（G12） |
 | `limits` | 脚本 `LIMITS` | 行数类阈值（G10/G12/G13），只写要覆盖的键；取值只在[档位表](../references/layout.md)里定义 |
 | `descriptionSource` | `package.json` | G13 取 `description` 的来源文件（Python / Go 项目换成自己的清单） |
