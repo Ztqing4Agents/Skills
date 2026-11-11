@@ -14,9 +14,10 @@ description: 开发者文档体系规范：规定 AGENTS.md / CHANGELOG.md / 契
 | 你手上的东西 | 去哪 | 何时消失 |
 |---|---|---|
 | 现在必须成立的事实 | 契约：`spec.md`（1 份）/ `docs/contracts/`（≥2 份） | 改代码时同步改；不再成立就删 |
-| 为什么这么定、放弃了什么 | commit message | 不消失（git 承载，`git log -S` 可查） |
+| 为什么这么定、放弃了什么 | commit message；产品级「不做」的裁决 → 契约的决策登记（`decisions.md` 一类，MADR `rejected`） | 不消失（git 承载，`git log -S` 可查） |
 | 还没做，且一句话说得清 | 任务板「待办」表 | 勾掉 = 换表 |
-| **做完了，要能一眼查到** | 任务板「已完成」表（ID / 完成于 / 一件事 / commit） | 只增不删；细节归 commit message |
+| **做完了，要能一眼查到** | 任务板「已完成」表（ID / 完成于 / 一件事 / commit） | 只增不删（溢出进归档区）；细节归 commit message |
+| **完成记录溢出**（超过看板行数上限） | 看板归档区（`BOARD-archive.md`）：同一张表的延续 | 只追加、时间倒序；门禁校验 |
 | **指路：结论在哪、依据是什么** | 就写在那条记录里（`docs/x.md §3.2` / `AGENTS.md 硬约束 N` / 短 sha / 用户原话(日期)） | 锚点失效即红；不写「见上文」 |
 | **做到一半，跨会话还要读** | **`.agents/work/wip/<ID>-<slug>.md`** | **蒸馏后删** |
 | **方案 / 草稿 / 分析 / 报告** | **`.agents/work/scratch/`** | **随时 `rm -rf`** |
@@ -41,8 +42,9 @@ description: 开发者文档体系规范：规定 AGENTS.md / CHANGELOG.md / 契
 | 收尾时发现 MEMORY 膨胀 | [references/memory-decoupling.md](references/memory-decoupling.md) |
 | 配门禁、定目录、判红还是告警 | [references/gates-and-layout.md](references/gates-and-layout.md) |
 | 多任务并行、要挂起再回来、需要看板 | [references/parallel-work.md](references/parallel-work.md) |
+| 收尾审计：文档有没有在悄悄变假 | [references/doc-rot-signals.md](references/doc-rot-signals.md) |
 
-## 六条铁律
+## 七条铁律
 
 1. **四类信息不许进同一个容器。** 过程不许留在**仓库**里——要落盘就进 `scratch/`；唯一必须落盘的过程是挂起的 WIP。
 2. **AGENTS.md 是地图，不是领土。** 超过 100 行 = 有人在塞本该属于契约的内容。
@@ -50,6 +52,7 @@ description: 开发者文档体系规范：规定 AGENTS.md / CHANGELOG.md / 契
 4. **MEMORY 装的是「不进 review 的东西」。** 一旦定型、会被别人读、改错要负责，它就该离开。
 5. **完成的 WIP 必须删。** 不归档——价值蒸馏进 CHANGELOG / commit / 契约 / AGENTS，原件消失。唯一例外：改版/迁移前留一份**可弃快照**（放 `scratch/`、文件名带日期、注明确认后即删）——目的是证明迁移没丢内容，不是收藏。
 6. **指路的东西必须能被门禁 grep 到。** 任务板的「依据」、文档地图、契约里的用例编号都是坐标不是散文；坐标能机械校验，散文不能——这是看板不腐化的唯一手段。
+7. **会变的数不手写，没主体的将来时不写。** 用例数 / 行数 / 条数 / 字节数交给脚本或门禁回读；「后续版本 / 以后会 / 即将」要么带看板 ID，要么删——这两类是文档腐化最快的入口。
 
 ## 交付前自检
 
@@ -58,3 +61,4 @@ description: 开发者文档体系规范：规定 AGENTS.md / CHANGELOG.md / 契
 - [ ] 用户可见变化进 CHANGELOG 了？破坏性变更单独列了？
 - [ ] 有任务挂起吗？那份 WIP 的「下一步」具体到能直接执行吗？看板那条的「依据」能 grep 到吗？
 - [ ] 有任务完成吗？三问蒸馏（用户可感知 / 新不变量 / 新坑）做了吗？WIP 删了吗？行换进「已完成」表、ID 没换号吗？
+- [ ] 新写的句子有没有「会变的数」或「没主体的将来时」？（有 → 脚本生成 / 补看板 ID，见 [doc-rot-signals](references/doc-rot-signals.md)）
