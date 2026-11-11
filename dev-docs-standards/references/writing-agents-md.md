@@ -45,6 +45,8 @@ README 给人：quick start、项目描述。AGENTS.md 给 agent：那些「会�
 - **超过 100 行 = 在塞领土。** 该做的是把内容送进契约文档，把指针留在文档地图里。
 - **不写**：实现细节、架构长文、变更历史、待办列表、教程。
 
+- **不为每个工具维护分身**：`AGENTS.md` 已是跨厂商约定（Codex 起源，Claude Code 2.1.277 起直接读），再写一份 `CLAUDE.md` / `.cursorrules` / `GEMINI.md` 就是第二个真源。
+
 ## 嵌套与优先级（官方规则，monorepo 必读）
 
 - 子项目目录可放**嵌套 AGENTS.md**；agent 读**目录树中最近的**那份；
