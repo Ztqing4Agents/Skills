@@ -236,6 +236,8 @@ function loadConfig(root) {
     error: null,
     hasWhitelist: false,
     whitelist: null,
+    hasExclude: false,
+    exclude: [],
     lines: [],
     idPrefixes: [...DEFAULT_CONFIG.idPrefixes],
     limits: {
@@ -275,6 +277,13 @@ function loadConfig(root) {
     if (list.length > 0) {
       info.hasWhitelist = true;
       info.whitelist = list.map((x) => x.trim());
+    }
+  }
+  if (Array.isArray(raw.exclude)) {
+    const list = raw.exclude.filter((x) => typeof x === 'string' && x.trim() !== '');
+    if (list.length > 0) {
+      info.hasExclude = true;
+      info.exclude = list.map((x) => x.trim());
     }
   }
   if (Array.isArray(raw.idPrefixes)) {
@@ -390,7 +399,12 @@ function buildContext(root) {
   }
   const candidate = [...deduped].sort();
   const ignored = ignoredPaths(root, candidate);
-  ctx.files = candidate.filter((rel) => !ignored.has(rel));
+  // exclude：整组文件不进任何闸，用来放「仓库里夹带的产品内容」（如技能 bundle）。
+  // 别用 whitelist 代替——whitelist 只回答「这份文档允不允许存在」，进白名单仍要过 G2–G14。
+  const excludeRes = config.hasExclude ? config.exclude.map((raw) => globToRegExp(raw)) : [];
+  ctx.files = candidate.filter(
+    (rel) => !ignored.has(rel) && !excludeRes.some((re) => re.test(rel)),
+  );
   return ctx;
 }
 
@@ -2606,6 +2620,47 @@ function selftestCases() {
           assert(report.red.length === 0, `期待 0 red，实有：${report.red.map((i) => `${i.gate} ${i.message}`).join('; ')}`);
           assert(report.warn.length === 0, `期待 0 warn，实有：${report.warn.map((i) => `${i.gate} ${i.message}`).join('; ')}`);
           assert(!report.skip.some((i) => i.gate === 'G1'), 'G1 不应 skip（whitelist 已配置且文件齐全）');
+        } finally {
+          removeFixture(root);
+        }
+      },
+    },
+    {
+      name: 'exclude 里的目录不参与扫描 → 产品内容不进文档规范',
+      run() {
+        const files = cleanFixtureFiles();
+        files['bundle/SKILL.md'] = '# 技能入口\n\n这是产品内容，不该被文档规范判红。\n';
+        files[CONFIG_NAME] = `${JSON.stringify({
+          whitelist: ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'spec.md', 'docs/**'],
+          exclude: ['bundle/**'],
+          idPrefixes: ['U', 'M', 'V', 'D'],
+          descriptionSource: 'package.json',
+        }, null, 2)}\n`;
+        const root = makeFixture(files);
+        try {
+          const report = runChecks({ root });
+          assert(
+            !report.red.some((i) => i.gate === 'G2' && i.file === 'bundle/SKILL.md'),
+            'exclude 目录仍被 G2 扫描（G2 的红不带路径，按 file 字段判）',
+          );
+          assert(report.red.length === 0, `expect 0 red, got: ${report.red.map((i) => `${i.gate} ${i.message}`).join('; ')}`);
+        } finally {
+          removeFixture(root);
+        }
+      },
+    },
+    {
+      name: '未配 exclude 时同一份内容 → G2 red（证明 exclude 不是恒真）',
+      run() {
+        const files = cleanFixtureFiles();
+        files['bundle/SKILL.md'] = '# 技能入口\n\n这是产品内容，不该被文档规范判红。\n';
+        const root = makeFixture(files);
+        try {
+          const report = runChecks({ root });
+          assert(
+            report.red.some((i) => i.gate === 'G2' && i.file === 'bundle/SKILL.md'),
+            '未配 exclude 时应当报「无头注」',
+          );
         } finally {
           removeFixture(root);
         }
