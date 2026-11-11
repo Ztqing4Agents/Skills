@@ -1,2 +1,3 @@
 ## 发布与托管
 - Skills 仓库远程为 github.com/Ztqing4Agents/Skills（public，默认分支 main）；单技能的「根即技能」发布视图在 skill/<name> 分支，由 `git subtree split -P <name> -b skill/<name>` 幂等生成（旧 SHA 稳定），发布时在 main 和该分支上各打一个 tag（dev-docs-standards/vX.Y.Z 与 vX.Y.Z）。
+- dev-docs-standards 已发布到 SkillHub：canonical `@user_7e37093e/dev-docs-standards`，slug `dev-docs-standards`（skillId 317433）；更新方式为改 SKILL.md 的 version 后 `skillhub publish dev-docs-standards --changelog "..."`，发布后需过安全扫描才能被 install。

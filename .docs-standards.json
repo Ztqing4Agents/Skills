@@ -1,0 +1,5 @@
+{
+  "whitelist": ["README.md", "AGENTS.md", "CHANGELOG.md", "spec.md"],
+  "exclude": ["dev-docs-standards/**"],
+  "idPrefixes": ["U", "M", "V", "D"]
+}
