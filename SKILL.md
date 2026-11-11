@@ -73,4 +73,3 @@ description: 规范开发项目的文档体系：规定 AGENTS.md / CHANGELOG.md
 - [ ] 有任务挂起吗？那份 WIP 的「下一步」具体到能直接执行吗？看板那条的「依据」能 grep 到吗？
 - [ ] 有任务完成吗？三问蒸馏（用户可感知 / 新不变量 / 新坑）做了吗？WIP 删了吗？行换进「已完成」表、ID 没换号吗？
 - [ ] 新写的句子有没有「会变的数」或「没主体的将来时」？（有 → 脚本生成 / 补看板 ID，见 [doc-rot-signals](references/doc-rot-signals.md)）
-- [ ] 技能自身守规范：`SKILL.md` <500 行、`references/` 只从 SKILL.md 直接引用（一层深）、超过 100 行的参考带目录
