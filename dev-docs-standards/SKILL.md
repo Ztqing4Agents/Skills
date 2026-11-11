@@ -2,9 +2,9 @@
 name: dev-docs-standards
 description: 规定开发项目的文档体系：README / AGENTS / 契约 / 参考 / CHANGELOG / 看板与 WIP / MEMORY 各自装什么、长什么样、谁保证不腐化。用于新建或接管项目、决定某段内容该写进哪份文件、整理 docs、写 README / AGENTS / CHANGELOG、配置文档门禁，或发现 agent 记忆堆了本该进文档的东西。
 slug: dev-docs-standards
-displayName: 开发者文档体系规范
+displayName: Dev文档规范
 summary: 一套可执行的文档规范——AGENTS / 契约 / 参考 / CHANGELOG / 看板与 WIP 各归其位，附 7 份可填模板与 14 道可跑门禁。
-version: "1.2.3"
+version: "1.2.4"
 author: Ztqing
 license: MIT
 homepage: https://github.com/Ztqing4Agents/Skills
