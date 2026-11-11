@@ -65,9 +65,9 @@ git subtree split -P dev-docs-standards -b skill/dev-docs-standards   # 幂等�
 - **先 commit 再 split**：split 只认提交、不认工作树，未提交的改动不会被带过去。
 - **增量追加，不重写历史**：split 保留原提交的 author / date / message，所以旧提交 SHA 不变，已发布的 tag 仍指向同一份内容。
 - **别在这条分支上直接改**：它是生成物，要改回 `main`；往主线回流要走 `git subtree merge`，容易分叉。
-- **根 `LICENSE` 不会跟过去**（split 只导出子目录）：独立发布前把根 `LICENSE` 复制进发布目录。
+- **`LICENSE` 要放在 bundle 里**：split 只导出技能目录，根 `LICENSE` 不会被带出；要对外发布的技能在自己目录里放一份副本（`dev-docs-standards/LICENSE` 即是），split 会一并带出。
 - **每次发版三步**：`main` 上打 `dev-docs-standards/vX.Y.Z` → 重跑 split → 在发布视图的新头上打 `vX.Y.Z`。
 
 ## 许可证
 
-MIT，见仓库根 [LICENSE](LICENSE)。`git subtree split` 拆出来的技能只带走它自己目录，**发布前记得把根 `LICENSE` 复制进该 bundle**。
+MIT，见仓库根 [LICENSE](LICENSE)。对外发布的技能在自己的 bundle 内放一份副本（`dev-docs-standards/LICENSE`），这样 `git subtree split` 与 SkillHub 打包都能带上它。
