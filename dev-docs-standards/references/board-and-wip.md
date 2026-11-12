@@ -37,7 +37,7 @@
 
 **不用 stash 当并行现场**：stash 没名字、没说明，一周后没人知道哪个属于哪个任务；branch 名即状态，`git branch -v` 就是现场清单。
 
-> `.agents/work/` 已被 `.agents/*` 的 gitignore 规则覆盖，**不需要额外加 `.gitignore`**。仓库根再开一个 `tmp/` 只会得到两个临时区。
+> **`.agents/work/` 必须自己在 `.gitignore` 里占一行**（`.agents/work/`）。别指望仓库已有 `.agents/*` 这类通配规则——多数仓库只忽略了 `.agents/memory/`，结果看板与 WIP 直接进了 git。仓库根再开一个 `tmp/` 只会得到两个临时区。
 
 发现第二个临时区（`.agents/scratch/`、根 `tmp/`、`docs/drafts/`）时按三步收：内容并进 `work/scratch/` → **删掉旧目录本身** → **删掉它在 `.gitignore` 里的那一行**。只删目录不改 gitignore，下次有人照着旧规则又建一个；只改 gitignore 不删目录，等于允许它复活。
 
@@ -48,6 +48,7 @@
 - 同一会话能做完的 → **不建**，直接用看板；
 - 预计中断 ≥ 1 次（等 token、等用户决定、要转去做别的）→ 建；
 - 分支不是必需的：多人协作或长命特性才建（`git switch -c fix/xxx`，分支名即状态）；单人 + 本地看板，看板 + `git status` 已够对账。
+- `wip/` 是**逐个任务的现场文件**，不是队列：一个任务一个文件，完成即删，不留积压。
 
 ## 一个 WIP 的五要素
 

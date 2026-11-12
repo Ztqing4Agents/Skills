@@ -4,7 +4,7 @@ description: 规定开发项目的文档体系：README / AGENTS / 契约 / 参�
 slug: dev-docs-standards
 displayName: Dev文档规范
 summary: 一套可执行的文档规范——AGENTS / 契约 / 参考 / CHANGELOG / 看板与 WIP 各归其位，附 7 份可填模板与 14 道可跑门禁。
-version: "1.2.4"
+version: "1.3.0"
 author: Ztqing
 license: MIT
 homepage: https://github.com/Ztqing4Agents/Skills
