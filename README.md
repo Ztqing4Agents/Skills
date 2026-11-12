@@ -16,7 +16,7 @@ ln -s ~/Documents/Agents/Skills/dev-docs-standards ~/.dsh/skills/dev-docs-standa
 
 | 技能 | 干什么 |
 |---|---|
-| dev-docs-standards | 开发者文档体系：README / AGENTS / 契约 / 参考 / CHANGELOG / 看板与 WIP 各装什么、谁保证不腐化；附可填模板与门禁脚本 |
+| `dev-docs-standards`<br>Dev文档规范 | 开发者文档体系：README / AGENTS / 契约 / 参考 / CHANGELOG / 看板与 WIP 各装什么、谁保证不腐化；附可填模板与门禁脚本 |
 
 版本号、作者、许可证写在各技能自己的 `SKILL.md` 里；变更见 [CHANGELOG.md](CHANGELOG.md)，本仓库不另记一份。
 
